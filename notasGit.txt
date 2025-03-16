@@ -1,0 +1,17 @@
+Cuando inicie el proyecto hice:
+git init
+git add .
+git commit -m "Proyecto inicial con NestJS y Prisma"
+
+
+Vinculo el pryoecto con el repo creado:
+git branch -M main
+git remote add origin https://github.com/tu-usuario/tu-repo.git
+git push -u origin main
+
+
+De ahora en mas estos pasos para trabajar en cada feature:
+-git checkout -b feature/crud-eventos
+Termino y hago:
+-git commit -m "Agregado CRUD de eventos"
+-git push origin feature/crud-eventos
