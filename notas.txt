@@ -1,0 +1,21 @@
+DB Info:
+supabase (Al final no use esto, use railway)
+Project Name: padel-torneos
+Pass: padel-tornes
+postgresql://postgres:[YOUR-PASSWORD]@db.avoufxibubweugjctxey.supabase.co:5432/postgres
+
+railway
+En railway cree el proyecto y consegui la URL, seteo el .env:
+DATABASE_URL="postgresql://postgres:abdziGFDNoDWrQfuWfUlygGNICfnVsTI@yamabiko.proxy.rlwy.net:42326/railway"
+
+************** Tengo instalado prisma, asi que ejecuto: 
+-npx prisma studio
+Con esto levanto y verifico tablas.
+Antes cree el prisma.schema con las tablas y ejecute el migration para crear las tablas, etc...
+-npx prisma format --> Para verificar que el schema ande bien.
+-npx prisma migrate dev --name init --> Ejecuto la migracion.
+-npx prisma studio --> levanto prisma estudio para ver que todo se creo bien.
+
+
+************** Para correr la api / proyecto back: 
+-npm run start

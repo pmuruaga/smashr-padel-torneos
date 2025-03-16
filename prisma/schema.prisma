@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id          String                   @id @default(uuid())
+  nombre      String
+  email       String                   @unique
+  password    String
+  rol         Rol
+  organizados OrganizadoresPorEvento[] // Relación inversa agregada
+}
+
+enum Rol {
+  ORGANIZADOR
+  JUGADOR
+  ESPECTADOR
+}
+
+model Jugador {
+  id        String             @id @default(uuid())
+  nombre    String
+  apellido  String
+  dni       String             @unique
+  foto      String?
+  categoria String
+  sexo      Sexo
+  eventos   JugadorPorEvento[]
+}
+
+enum Sexo {
+  MASCULINO
+  FEMENINO
+  OTRO
+}
+
+model Evento {
+  id            String                   @id @default(uuid())
+  nombre        String
+  tipoEventoId  String
+  fechaInicio   DateTime
+  fechaFin      DateTime
+  tipoEvento    TipoEvento               @relation(fields: [tipoEventoId], references: [id])
+  jugadores     JugadorPorEvento[]
+  organizadores OrganizadoresPorEvento[]
+  partidos      Partido[]
+}
+
+model TipoEvento {
+  id      String   @id @default(uuid())
+  nombre  String
+  eventos Evento[] // Relación inversa agregada
+}
+
+model JugadorPorEvento {
+  id        String  @id @default(uuid())
+  eventoId  String
+  jugadorId String
+  evento    Evento  @relation(fields: [eventoId], references: [id])
+  jugador   Jugador @relation(fields: [jugadorId], references: [id])
+}
+
+model OrganizadoresPorEvento {
+  id            String  @id @default(uuid())
+  eventoId      String
+  organizadorId String
+  evento        Evento  @relation(fields: [eventoId], references: [id])
+  organizador   Usuario @relation(fields: [organizadorId], references: [id])
+}
+
+model Partido {
+  id        String           @id @default(uuid())
+  eventoId  String?
+  fecha     DateTime
+  hora      String
+  categoria String
+  genero    Genero
+  instancia InstanciaPartido
+  marcador  Json?
+
+  evento Evento? @relation(fields: [eventoId], references: [id])
+}
+
+enum Genero {
+  MASCULINO
+  FEMENINO
+  MIXTO
+  LIBRE
+}
+
+enum InstanciaPartido {
+  UNICO
+  LIGA
+  PLAYOFF
+  OCTAVOS
+  CUARTOS
+  SEMIFINAL
+  FINAL
+  FASE_GRUPOS
+}
