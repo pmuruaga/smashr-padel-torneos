@@ -1,16 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Jugador, Sexo } from '@prisma/client';
 
 @Injectable()
 export class JugadorService {
+  private readonly logger = new Logger(JugadorService.name);
+
   constructor(private prisma: PrismaService) {}
 
   async crearJugador(data: { nombre: string; apellido: string; dni: string; foto?: string; categoria: string; sexo: Sexo }): Promise<Jugador> {
+    this.logger.log(`Nuevo jugador creado: ${data.apellido}, ${data.nombre}`);
     return this.prisma.jugador.create({ data });
   }
 
   async obtenerJugadores(): Promise<Jugador[]> {
+    this.logger.log('Obteniendo jugadores');
     return this.prisma.jugador.findMany();
   }
 

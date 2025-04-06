@@ -19,3 +19,9 @@ Antes cree el prisma.schema con las tablas y ejecute el migration para crear las
 
 ************** Para correr la api / proyecto back: 
 -npm run start
+
+
+------------------- To-Do ---------------------
+-Tener en cuenta que en partidos no estoy incluyendo los jugadores involucrados
+-Definir donde voy a tener las configuraciones de partido (Si se juega a 3 sets, o 2 set mas super tiebreak).
+-Definir Sponsors (Por evento, generales de la app)

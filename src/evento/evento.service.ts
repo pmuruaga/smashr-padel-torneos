@@ -1,16 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Evento } from '@prisma/client';
 
 @Injectable()
 export class EventoService {
+
+    private readonly logger = new Logger(EventoService.name);
+
   constructor(private prisma: PrismaService) {}
 
   async crearEvento(data: { nombre: string; tipoEventoId: string; fechaInicio: Date; fechaFin: Date }): Promise<Evento> {
+    this.logger.log(`Creando Evento: ${data.nombre}`);
     return this.prisma.evento.create({ data });
   }
 
   async obtenerEventos(): Promise<Evento[]> {
+    this.logger.log(`Obteniendo todos los Eventos`);
     return this.prisma.evento.findMany();
   }
 

@@ -1,16 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Usuario, Rol } from '@prisma/client';
 
 @Injectable()
 export class UsuarioService {
+  private readonly logger = new Logger(UsuarioService.name);
+
   constructor(private prisma: PrismaService) {}
 
   async crearUsuario(data: { nombre: string; email: string; password: string; rol: Rol }): Promise<Usuario> {
+    this.logger.log(`Creando usuario: ${data.email}`);
     return this.prisma.usuario.create({ data });
   }
 
   async obtenerUsuarios(): Promise<Usuario[]> {
+    this.logger.log('Obteniendo todos los usuarios');
     return this.prisma.usuario.findMany();
   }
 

@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { JugadorService } from './jugador.service';
 import { Jugador, Sexo } from '@prisma/client';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('jugadores')
 export class JugadorController {
@@ -11,6 +13,7 @@ export class JugadorController {
     return this.jugadorService.crearJugador(data);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   obtenerJugadores() {
     return this.jugadorService.obtenerJugadores();
